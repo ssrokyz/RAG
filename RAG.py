@@ -1,5 +1,10 @@
 #!/usr/bin/env python
-##### CODE BY YOUNG JAE CHOI #####
+"""
+  Young-Jae Choi, POSTECH, Korea, Rep. of.
+  Inquiries: ssrokyz@gmail.com
+"""
+
+import numpy as np
 
 def count2list(dict_in):
     list_out = []
@@ -29,7 +34,6 @@ def covalent_expect(input):
     """ Returns covalent bond expectation value of system 
     input : dict or list
     e.g. {'Si':1, 'H':2} or ['Si', 'H', 'H']
-
     """
 
     from ase.atoms import symbols2numbers as s2n
@@ -263,6 +267,7 @@ def random_atoms_gen(
         cutoff_r = 0.
 
     ## Get random adjust radius
+    from ase.build import make_supercell
     if random_frac is not None and random_radi is None:
         supercell = make_supercell(backbone,[[2,0,0],[0,2,0],[0,0,2]])
         from ase.optimize.precon.neighbors import estimate_nearest_neighbour_distance as rNN
