@@ -1,0 +1,11 @@
+  Young-Jae Choi, POSTECH, Korea, Rep. of.
+  Inquiries: ssrokyz@gmail.com
+
+>>>>>>>>>>>>>>>>>>>>>> INSTALLATION <<<<<<<<<<<<<<<<<<<<<
+
+1. You must install all prerequisites below.
+    prerequisite: numpy, ase
+    For example,
+    >>    pip install --user numpy ase
+
+2. 
