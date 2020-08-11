@@ -1,0 +1,11 @@
+ <NOTE>
+
+* POTCAR file including pseudopotentials of Ge and Te is required.
+  (POTCAR file is not included due to licenses. Please get one or use calculators other than VASP.)
+
+* To run this script, you should install RAG in advance.
+  To get RAG, visit the GitHub repository below.
+  https://github.com/ssrokyz/RAG
+
+* Script is using the VASP to calculate the energies and forces.
+  You can easily revise the script to use different calculators.

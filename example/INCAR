@@ -1,0 +1,24 @@
+ SYSTEM=ge_ran
+#
+   GGA     =        PE      ! 91:Perdew-Wang91 | PE:PBE | RP: revised PBE | PS:PBEsol | AM
+   PREC    =         a      ! determines the energy cutoff ENCUT, |L|M|N|A|H|
+   ISTART  =         0      ! job   : 0-new 1-cont 2-samecut
+   ICHARG  =         2      ! charge: 0-wave 1-file 2-atom 10-const
+   ISPIN   =         1      ! | 1-non spin polarized | 2-spin polarized |
+   ENCUT   =        400.    ! cut-off energy for plane wave basis set in eV
+   NELM    =        200     ! maximum number of electronic SC (selconsistency)
+   EDIFF   =       1E-07    ! specifies the global break condition for the electronic
+   IALGO   =        38      ! select algorithm (8=CG for small, 48=RMM for big systems)
+   NSW     =        15      ! maximum number of ionic steps
+   IBRION  =         2      ! how to ions are updated and moved
+   EDIFFG  =      -.5E-02   ! break conditions for the ionic relaxation loop
+   ISIF    =         2      ! controls whether the stress tensor is alculated
+   ISYM    =         2      ! switch symmetry on (1,2,3) or off (-1,0)
+   IVDW    =        12
+ DOS related values:
+   ISMEAR  =         0      ! for semiconductor or insulators ISMEAR=-5, SIGMA=0.05
+   SIGMA   =         0.05   ! for metal ISMEAR=1 or =2 SIGMA=0.2
+ Write flags
+   LWAVE   =        .FALSE. ! These tags determine whether the orbitals (file WAVECAR),
+   LCHARG  =        .FALSE. ! the charge densities (files CHGCAR and CHG) are written
+
