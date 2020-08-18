@@ -202,7 +202,6 @@ def random_atoms_gen(
     shffl_spec_list = count2list(num_shffl_spec_dict)
 
     # Covalent bond length expectation value
-    from ss_util import covalent_expect
     coval_expect = covalent_expect(spec_list)
                 
     ## Cell strain adjustment.
