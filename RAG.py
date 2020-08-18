@@ -70,18 +70,18 @@ def random_atoms_gen(
     log           = True,
     ):
     """ 
-    generate randomly positioned image base on backbone structure
+    RAG generates randomly positioned image based on backbone structure.
 
     backbone : An ASE atoms object
-        Which will be backbone position.
+        All atomic positions of the backbone structure will be the lattice sites.
 
     num_spec_dict : dict or None
-        Number of each species. Identical to that of the backbone object's if None is provided.
-        "V" correspond to vacancy (remove atom from the backbone).
-        Note the following condition must be satisfied.
+        Number of atoms for each species. If None, set to be identical to the backbone structure.
+        "V" correspond to vacancy (Not placing any atom at the lattice site).
+        Note that the following condition must be satisfied.
             --> np.sum(num_spec_dict.values()) == len(backbone)
-        E.g.) {'Ge': 4, 'Te': 4, 'V': 2}
-            Condition: the backbone structure must have 10 atoms, totally.
+        E.g.) {'Ge': 3, 'Te': 4, 'V': 1}
+           --> Condition: the backbone structure must have 8 atoms, totally.
 
     fix_ind_dict : dict or list or None
         Dict of atomic indices in the backbone for each species whose sites will not be shuffled.
@@ -89,47 +89,48 @@ def random_atoms_gen(
         Note that every fixed atom will also have positional deviation, unless 'pin_the_fixed' set to be 'True'.
         Set to "None" if all atoms' positions must be shuffled.
         E.g.) {'Te': [0, 2, 4, 6]}
-            * I.e. Te atoms will be placed at the position of those indices in the backbone, and others will be permuted randomly.
+            * I.e. The lattice sites at the positions, backbone.positions[[0,2,4,6]], will be filled by Te atoms, and others will be shuffled.
 
     pin_the_fixed : Boolean
-        If true, atoms included in the fix_ind_dict will not have deviations of positions.
+        If true, atoms included in the fix_ind_dict will not be deviated from their lattice sites (even if the cutoff_radi and cutoff_frac are not zero).
 
-    cutoff_radi : Float
-        Cutoff radius for minimal distance between atoms.
-        If provided with cutoff_frac simultaneously, occurs error.
-        Both cutoff_radi and cutoff_frac are not provided, set to be zero.
+    Note)
+        If both cutoff_radi and cutoff_frac are provided simultaneously, occurs error.
+        If both cutoff_radi and cutoff_frac are not provided, cutoff_radi is set to be zero by default. i.e. no constraint
 
-    cutoff_frac : Float
-        Set cutoff_radi as length scaled as 
-        expectation value of covalent bonds of every atomic species.
-        If provided with cutoff_radi simultaneously, occurs error.
-        Both cutoff_radi and cutoff_frac are not provided, set to be zero.
+        cutoff_radi : Float
+            Cutoff radius for the minimum distance between two atoms.
+            If there is a pair of atoms closer than the cutoff_radi, the position of the atom will be randomized again.
 
-    random_radi : float
-        Value of how much distance from backbone positions
-        will be used as radius (from backbone) of generating new candidates.
-        If provided with random_frac simultaneously, occurs error.
-        Both random_radi and random_frac are not provided, set to be zero.
+        cutoff_frac : Float
+            Set cutoff_radi as {cutoff_frac *2 *(expected value of covalent radius of the material)}.
+            i.e. When cutoff_frac == 1, all atoms are spaced with at least two times of expected covalent radius.
 
-    random_frac : Float
-        Value of how much fraction of half of RDF nearest neighbor distance of backbone
-        will be used as radius (from backbone) of generating new candidates.
-        Note) With this option of other than 'None', RDF calculation will be carried out
-            , which is a time consuming process for big systems.
-        If provided with random_radi simultaneously, occurs error.
-        Both random_radi and random_frac are not provided, set to be zero.
+    Note)
+        If both random_radi and random_frac are provided simultaneously, occurs error.
+        If both random_radi and random_frac are not provided, random_radi is set to be zero by default. i.e. no deviation
 
-    strain : List of three floats e.g. [0,0,5]
+        random_radi : float
+            Maximum magnitude of the random deviation vector.
+            Each atom will deviated from its lattice point by a random vector shorter than random_radi.
+
+        random_frac : Float
+            Set random_radi as {random_frac *0.5 *(position of RDF first peak)}
+            RDF = radial distribution function or pair correlation function
+            !!Caution!!
+                When this option is switched on, RDF calculation will be carried out, which is a time consuming process for big systems.
+
+    strain : List of three floats e.g. [0.,0.,5.]
         Values specify how much you magnify the provided backbone cell.
         Cell gets longer along lattice vectors.
         positions will stay scaled positions of backbone atoms.
 
-    strain_ratio : List of three floats e.g. [1,1.1,1]
+    strain_ratio : List of three floats e.g. [1.,1.1,1.]
         Values specify how much you magnify the provided backbone cell.
         Cell gets longer along lattice vectors.
         positions will stay scaled positions of backbone atoms.
 
-    vacuum : List of three floats e.g. [0,0,5]
+    vacuum : List of three floats e.g. [0.,0.,5.]
         Values specify how much you magnify the provided backbone cell with vacuum.
         Cell gets longer along lattice vectors.
         positions will stay absolute positions of backbone atoms.
