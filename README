@@ -1,11 +1,37 @@
   Young-Jae Choi, POSTECH, Korea, Rep. of.
   Inquiries: ssrokyz@gmail.com
 
->>>>>>>>>>>>>>>>>>>>>> INSTALLATION <<<<<<<<<<<<<<<<<<<<<
+Note) " >> ABC " means running the command "ABC" via bash command line.
+      " }} ABC " means a line in python scripts.
+
+>>>>>>>>>>>>>>>>>>>>>> Getting RAG <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 1. You must install all prerequisites below.
-    prerequisite: numpy, ase
-    For example,
-    >>    pip install --user numpy ase
+   prerequisite: numpy, ase
+   For example,
+   >> pip install --user numpy ase
 
-2. 
+2. You can clone the RAG repository by,
+   >> git clone https://github.com/ssrokyz/RAG.git
+
+>>>>>>>>>>>>>>>>>>>>>> WITHOUT INSTALLATION <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+3-1. Just copy the RAG.py script into the task folder, for example,
+     >> cd RAG
+     >> cp RAG.py example/
+     >> cd example/
+     Then import RAG by including a line in the job script,
+     }} from RAG import random_atoms_gen as rag
+
+or alternatively,
+>>>>>>>>>>>>>>>>>>>>>> WITH INSTALLATION (optional) <<<<<<<<<<<<<<<<<<<<<<
+
+3-2. If you copy current directory to python library folder, for example,
+     >> cp -r RAG/ $HOME/.local/lib/python3.6/site-packages/
+     Now, you can import RAG by, like,
+     }} from RAG.RAG import random_atoms_gen as rag
+
+>>>>>>>>>>>>>>>>>>>>>> RUN <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+4. Run the job script, for example,
+   >> python make-RAG-structures.py
