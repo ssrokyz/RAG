@@ -4,6 +4,10 @@
 Note) " >> ABC " means running the command "ABC" via bash command line.
       " }} ABC " means a line in python scripts.
 
+If you need some theoretical stuff, check our report below.
+[1] Young-Jae Choi and Seung-Hoon Jhi, Efficient Training of Machine Learning Potentials by a Randomized Atomic-System Generator. J. Phys. Chem. B 124, 8704-8710 (2020).
+Please cite the paper above, when your work is somewhat related to our work.
+
 >>>>>>>>>>>>>>>>>>>>>> Getting RAG <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 1. You must install all prerequisites below.
