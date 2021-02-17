@@ -28,6 +28,7 @@ strain_max = 1.1
 strain_min = 0.95
 vacuum_max = 2.
 calc_command = 'mpiexec.hydra -np 4 vasp_std > out'
+# You should adjust the RAG parameters below.
 
 # @ Preprocess
 from ase.io.trajectory import Trajectory as Traj
@@ -40,6 +41,7 @@ for i in range(iter):
     vacuum = [0.,0.,np.random.rand() * vacuum_max]
 
     # Random system generation
+    # Descriptions for all parameters are included in the RAG.py file.
     atoms = rag(
         backbone,
         num_spec_dict = {'Ge':12, 'Te':12},
@@ -49,7 +51,7 @@ for i in range(iter):
         # cutoff_frac   = None,
         # random_radi   = None,
         random_frac   = 0.9,
-        strain        = None,
+        # strain        = None,
         strain_ratio  = strain_ratio,
         vacuum        = vacuum,
         # vacuum_ratio  = None,
