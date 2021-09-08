@@ -24,10 +24,17 @@ import datetime
 label = 'GeTe-RAG'
 backbone = read('backbone-GeTe-24.vasp')
 iter = 500
-strain_max = 1.1
-strain_min = 0.95
-vacuum_max = 2.
-calc_command = 'mpiexec.hydra -np 4 vasp_std > out'
+# strain_max = 1.1
+# strain_min = 0.95
+strain_mean  = 1.00
+strain_sigma = 0.01
+vacuum_max = 0.
+
+#
+NSLOTS = 4
+EXEC = 'vasp_std'
+OUT = 'vasp.out'
+calc_command = 'mpiexec.hydra -np {} {} > {}'.format(NSLOTS, EXEC, OUT)
 # You should adjust the RAG parameters below.
 
 # @ Preprocess
@@ -37,7 +44,8 @@ traj = Traj(label+'.traj', 'w')
 # @ Main
 for i in range(iter):
     # Random ratio
-    strain_ratio = np.random.rand(3) * (strain_max - strain_min) + strain_min
+    # strain_ratio = np.random.rand(3) * (strain_max - strain_min) + strain_min
+    strain_ratio = np.random.normal(strain_mean, strain_sigma, 3)
     vacuum = [0.,0.,np.random.rand() * vacuum_max]
 
     # Random system generation
@@ -45,12 +53,12 @@ for i in range(iter):
     atoms = rag(
         backbone,
         num_spec_dict = {'Ge':12, 'Te':12},
-        # fix_ind_dict  = None,
+        fix_ind_dict  = {'Te':[1, 3, 4, 6, 9, 11, 13, 15, 16, 18, 21, 23]},
         # pin_the_fixed = False,
-        cutoff_radi   = 2.864 * 0.75,
-        # cutoff_frac   = None,
+        # cutoff_radi   = 2.864 * 0.75,
+        cutoff_frac   = 0.9,
         # random_radi   = None,
-        random_frac   = 0.9,
+        random_frac   = 0.25,
         # strain        = None,
         strain_ratio  = strain_ratio,
         vacuum        = vacuum,
