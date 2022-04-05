@@ -66,6 +66,7 @@ def random_atoms_gen(
     strain_ratio  = [1.,1.,1.],
     vacuum        = None,
     vacuum_ratio  = None,
+    sort_atoms    = False,
     max_trial_sec = 5,
     log           = True,
     ):
@@ -141,6 +142,9 @@ def random_atoms_gen(
         Cell gets longer along lattice vectors.
         positions will stay absolute positions of backbone atoms.
         insert vacuum after strain (if provided)
+
+    sort_atoms : True or False
+        Sort atomic indices with increasing order in atomic numbers.
 
     max_trial_sec : float
         Maximum number of trials to get a new atomic position.
@@ -373,6 +377,7 @@ def random_atoms_gen(
     ## Set the chemical symbols
     new_atoms.set_chemical_symbols(new_species)
     # Sort by chemical numbers
-    new_atoms = new_atoms[np.argsort(new_atoms.get_atomic_numbers())]
+    if sort_atoms:
+        new_atoms = new_atoms[np.argsort(new_atoms.get_atomic_numbers())]
 
     return new_atoms
